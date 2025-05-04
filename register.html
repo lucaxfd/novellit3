@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Novellit</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <i class="fas fa-arrow-left"></i>
+        Voltar para Home
+    </a>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Crie sua conta</h2>
+                <p>Junte-se à maior comunidade de novels do Brasil</p>
+            </div>
+
+            <form class="auth-form" id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="username">Nome de usuário</label>
+                    <input type="text" id="username" name="username" placeholder="Seu nome de usuário" required>
+                    <span class="error-message" id="usernameError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="Seu e-mail" required>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" placeholder="Sua senha" required>
+                    <i class="fas fa-eye password-toggle"></i>
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirme sua senha</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Digite sua senha novamente" required>
+                    <i class="fas fa-eye password-toggle"></i>
+                    <span class="error-message" id="confirmPasswordError"></span>
+                </div>
+
+                <div class="form-error" id="formError"></div>
+
+                <button type="submit" class="btn-submit" id="registerButton">
+                    <span>Criar conta</span>
+                    <div class="loader" style="display: none;"></div>
+                </button>
+            </form>
+
+            <div class="auth-separator">ou continue com</div>
+
+            <div class="social-login">
+                <a href="#" class="social-btn">
+                    <i class="fab fa-google"></i>
+                    Google
+                </a>
+                <a href="#" class="social-btn">
+                    <i class="fab fa-facebook-f"></i>
+                    Facebook
+                </a>
+            </div>
+
+            <div class="auth-footer">
+                Já tem uma conta? <a href="login.html">Faça login</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { authService } from './js/api/index.js';
+
+        // Toggle de visibilidade da senha
+        document.querySelectorAll('.password-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const passwordInput = this.previousElementSibling;
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // Manipulação do formulário de registro
+        const registerForm = document.getElementById('registerForm');
+        const registerButton = document.getElementById('registerButton');
+        const buttonText = registerButton.querySelector('span');
+        const loader = registerButton.querySelector('.loader');
+        const formError = document.getElementById('formError');
+        const usernameError = document.getElementById('usernameError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Limpar mensagens de erro anteriores
+            formError.textContent = '';
+            usernameError.textContent = '';
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            confirmPasswordError.textContent = '';
+
+            // Pegar valores do formulário
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validações
+            let hasError = false;
+
+            // Validação do nome de usuário
+            if (username.length < 3) {
+                usernameError.textContent = 'O nome de usuário deve ter pelo menos 3 caracteres';
+                hasError = true;
+            }
+
+            // Validação do email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailError.textContent = 'Por favor, insira um e-mail válido';
+                hasError = true;
+            }
+
+            // Validação da senha
+            if (password.length < 8) {
+                passwordError.textContent = 'A senha deve ter pelo menos 8 caracteres';
+                hasError = true;
+            }
+
+            // Validação da confirmação de senha
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = 'As senhas não coincidem';
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+            try {
+                // Mostrar loading
+                buttonText.style.display = 'none';
+                loader.style.display = 'block';
+                registerButton.disabled = true;
+
+                // Fazer registro usando o authService
+                await authService.register(username, email, password, confirmPassword);
+               
+                // Redirecionar para o dashboard em caso de sucesso
+                window.location.href = '/dashboard.html';
+
+            } catch (error) {
+                // Tratamento de erros
+                formError.textContent = error.message;
+                formError.style.display = 'block';
+            } finally {
+                // Esconder loading
+                buttonText.style.display = 'block';
+                loader.style.display = 'none';
+                registerButton.disabled = false;
+            }
+        });
+
+        // Login com Google
+        document.querySelector('.social-btn:first-child').addEventListener('click', (e) => {
+            e.preventDefault();
+            authService.initiateGoogleLogin();
+        });
+
+        // Verificar se já está autenticado
+        if (authService.isAuthenticated()) {
+            window.location.href = '/dashboard.html';
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Novel - Novellit</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Novellit</h1>
+            </div>
+            <button class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Novels</a></li>
+                    <li><a href="planos.html">Planos</a></li>
+                    <li><a href="publish.html" class="active">Publicar</a></li>
+                    <li><a href="profile.html">Perfil</a></li>
+                    <li><a href="login.html" class="btn-header">Entrar</a></li>
+                    <li><a href="register.html" class="btn-header">Registrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="publish-container">
+        <div class="publish-header">
+            <h2>Publique sua Novel</h2>
+            <p>Compartilhe sua história com milhares de leitores apaixonados por literatura</p>
+        </div>
+
+        <div class="publish-grid">
+            <div class="publish-main">
+                <div class="publish-alert">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="publish-alert-content">
+                        <h4>Processo de Avaliação</h4>
+                        <p>Para garantir a qualidade do conteúdo e a melhor experiência para nossos leitores, todas as novels passam por um processo de avaliação antes da publicação.</p>
+                        <ul>
+                            <li><i class="fas fa-clock"></i>Tempo médio de avaliação: 24-48 horas</li>
+                            <li><i class="fas fa-check"></i>Verificação de conteúdo apropriado</li>
+                            <li><i class="fas fa-spell-check"></i>Revisão básica de formatação</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <form class="publish-form">
+                    <div class="form-group">
+                        <label for="title">Título da Novel</label>
+                        <input type="text" id="title" placeholder="Digite um título cativante" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="synopsis">Sinopse</label>
+                        <textarea id="synopsis" placeholder="Escreva uma sinopse envolvente que atraia seus leitores..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="genre">Gênero Principal</label>
+                        <select id="genre" required>
+                            <option value="">Selecione o gênero</option>
+                            <option value="fantasy">Fantasia</option>
+                            <option value="romance">Romance</option>
+                            <option value="action">Ação</option>
+                            <option value="mystery">Mistério</option>
+                            <option value="scifi">Ficção Científica</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <input type="text" id="tags" placeholder="Digite tags e pressione Enter">
+                        <div class="tag-container">
+                            <span class="tag">
+                                Aventura
+                                <i class="fas fa-times"></i>
+                            </span>
+                            <span class="tag">
+                                Magia
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="chapter">Primeiro Capítulo</label>
+                        <textarea id="chapter" placeholder="Comece sua história aqui..." required></textarea>
+                    </div>
+
+                    <div class="publish-actions">
+                        <button type="submit" class="btn-publish primary">Publicar Novel</button>
+                        <button type="button" class="btn-publish draft">Salvar Rascunho</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="publish-sidebar">
+                <div class="cover-upload-container">
+                    <div class="cover-preview" id="coverPreview">
+                        <i class="fas fa-image"></i>
+                        <p>Clique para adicionar capa</p>
+                    </div>
+                    <input type="file" id="coverUpload" accept="image/*" style="display: none;">
+                </div>
+
+                <div class="publish-tips">
+                    <h3>Dicas para Publicação</h3>
+                    <ul class="tips-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Escolha um título memorável e único</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Escreva uma sinopse que desperte curiosidade</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Use tags relevantes para melhor visibilidade</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Adicione uma capa atraente (800x1200px)</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Revise seu texto antes de publicar</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preview da imagem de capa
+        const coverPreview = document.getElementById('coverPreview');
+        const coverUpload = document.getElementById('coverUpload');
+
+        coverPreview.addEventListener('click', () => {
+            coverUpload.click();
+        });
+
+        coverUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    coverPreview.innerHTML = `<img src="${e.target.result}" alt="Capa da Novel" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">`;
+                    coverPreview.classList.add('has-image');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Gerenciamento de tags
+        const tagsInput = document.getElementById('tags');
+        const tagContainer = document.querySelector('.tag-container');
+
+        tagsInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const tagText = tagsInput.value.trim();
+                if (tagText) {
+                    addTag(tagText);
+                    tagsInput.value = '';
+                }
+            }
+        });
+
+        function addTag(text) {
+            const tag = document.createElement('span');
+            tag.classList.add('tag');
+            tag.innerHTML = `
+                ${text}
+                <i class="fas fa-times"></i>
+            `;
+            
+            tag.querySelector('i').addEventListener('click', () => {
+                tag.remove();
+            });
+
+            tagContainer.appendChild(tag);
+        }
+    </script>
+    <script src="js/menu.js"></script>
+</body>
+</html> 

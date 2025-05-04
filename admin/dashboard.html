@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Novellit</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-body">
+    <nav class="admin-sidebar">
+        <div class="admin-logo">
+            <h1>Novellit</h1>
+            <span>Painel Admin</span>
+        </div>
+        
+        <ul class="admin-menu">
+            <li class="active">
+                <a href="dashboard.html">
+                    <i class="fas fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    Usuários
+                </a>
+            </li>
+            <li>
+                <a href="novels.html">
+                    <i class="fas fa-book"></i>
+                    Novels
+                </a>
+            </li>
+            <li>
+                <a href="reports.html">
+                    <i class="fas fa-chart-bar"></i>
+                    Relatórios
+                </a>
+            </li>
+        </ul>
+
+        <div class="admin-user">
+            <img src="" alt="Admin" id="adminAvatar" class="admin-avatar">
+            <div class="admin-user-info">
+                <strong id="adminName">Carregando...</strong>
+                <span>Administrador</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="admin-main">
+        <header class="admin-header">
+            <div class="admin-header-title">
+                <h2>Dashboard</h2>
+                <p>Visão geral da plataforma</p>
+            </div>
+            <div class="admin-header-actions">
+                <button id="refreshStats" class="btn-outline">
+                    <i class="fas fa-sync-alt"></i>
+                    Atualizar
+                </button>
+                <button id="logoutBtn" class="btn-primary">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sair
+                </button>
+            </div>
+        </header>
+
+        <div class="admin-stats-grid">
+            <div class="admin-stat-card">
+                <div class="stat-icon users">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total de Usuários</h3>
+                    <p id="totalUsers">Carregando...</p>
+                </div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span id="userGrowth">0%</span>
+                </div>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="stat-icon novels">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Novels Publicadas</h3>
+                    <p id="totalNovels">Carregando...</p>
+                </div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span id="novelGrowth">0%</span>
+                </div>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="stat-icon revenue">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Receita Mensal</h3>
+                    <p id="monthlyRevenue">Carregando...</p>
+                </div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span id="revenueGrowth">0%</span>
+                </div>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="stat-icon premium">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Usuários Premium</h3>
+                    <p id="premiumUsers">Carregando...</p>
+                </div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span id="premiumGrowth">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-charts-grid">
+            <div class="admin-chart-card">
+                <h3>Crescimento de Usuários</h3>
+                <canvas id="userGrowthChart"></canvas>
+            </div>
+
+            <div class="admin-chart-card">
+                <h3>Receita Mensal</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+
+        <div class="admin-recent-grid">
+            <div class="admin-card pending-novels">
+                <div class="card-header">
+                    <h3>Novels Pendentes</h3>
+                    <a href="novels.html?filter=pending" class="btn-text">Ver Todas</a>
+                </div>
+                <div class="card-content" id="pendingNovelsList">
+                    <div class="loading">Carregando...</div>
+                </div>
+            </div>
+
+            <div class="admin-card recent-users">
+                <div class="card-header">
+                    <h3>Usuários Recentes</h3>
+                    <a href="users.html" class="btn-text">Ver Todos</a>
+                </div>
+                <div class="card-content" id="recentUsersList">
+                    <div class="loading">Carregando...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { adminService } from '../js/api/services/adminService.js';
+        import { authService } from '../js/api/index.js';
+
+        // Verificar se é admin
+        if (!adminService.isAdmin()) {
+            window.location.href = '/login.html';
+        }
+
+        // Carregar dados do admin
+        const user = authService.getCurrentUser();
+        document.getElementById('adminName').textContent = user.name;
+        if (user.avatar) {
+            document.getElementById('adminAvatar').src = user.avatar;
+        }
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            authService.logout();
+        });
+
+        // Funções auxiliares para formatação
+        const formatNumber = (num) => new Intl.NumberFormat('pt-BR').format(num);
+        const formatCurrency = (value) => new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(value);
+
+        // Carregar estatísticas
+        async function loadDashboardStats() {
+            try {
+                const stats = await adminService.getDashboardStats();
+                
+                // Atualizar cards de estatísticas
+                document.getElementById('totalUsers').textContent = formatNumber(stats.totalUsers);
+                document.getElementById('totalNovels').textContent = formatNumber(stats.totalNovels);
+                document.getElementById('monthlyRevenue').textContent = formatCurrency(stats.monthlyRevenue);
+                document.getElementById('premiumUsers').textContent = formatNumber(stats.premiumUsers);
+                
+                document.getElementById('userGrowth').textContent = `${stats.userGrowth}%`;
+                document.getElementById('novelGrowth').textContent = `${stats.novelGrowth}%`;
+                document.getElementById('revenueGrowth').textContent = `${stats.revenueGrowth}%`;
+                document.getElementById('premiumGrowth').textContent = `${stats.premiumGrowth}%`;
+
+                // Atualizar gráficos
+                updateCharts(stats);
+                
+                // Atualizar listas
+                updatePendingNovels(stats.pendingNovels);
+                updateRecentUsers(stats.recentUsers);
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+                alert('Erro ao carregar estatísticas. Por favor, tente novamente.');
+            }
+        }
+
+        // Atualizar gráficos
+        function updateCharts(stats) {
+            // Gráfico de crescimento de usuários
+            new Chart(document.getElementById('userGrowthChart'), {
+                type: 'line',
+                data: {
+                    labels: stats.userGrowthData.labels,
+                    datasets: [{
+                        label: 'Novos Usuários',
+                        data: stats.userGrowthData.values,
+                        borderColor: '#A259FF',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Gráfico de receita
+            new Chart(document.getElementById('revenueChart'), {
+                type: 'bar',
+                data: {
+                    labels: stats.revenueData.labels,
+                    datasets: [{
+                        label: 'Receita',
+                        data: stats.revenueData.values,
+                        backgroundColor: '#A259FF'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Atualizar lista de novels pendentes
+        function updatePendingNovels(novels) {
+            const container = document.getElementById('pendingNovelsList');
+            container.innerHTML = novels.map(novel => `
+                <div class="pending-novel-item">
+                    <img src="${novel.coverUrl}" alt="${novel.title}" class="novel-cover">
+                    <div class="novel-info">
+                        <h4>${novel.title}</h4>
+                        <p>por ${novel.author}</p>
+                        <div class="novel-actions">
+                            <button onclick="approveNovel(${novel.id})" class="btn-outline btn-sm">
+                                <i class="fas fa-check"></i> Aprovar
+                            </button>
+                            <button onclick="rejectNovel(${novel.id})" class="btn-outline btn-sm">
+                                <i class="fas fa-times"></i> Rejeitar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Atualizar lista de usuários recentes
+        function updateRecentUsers(users) {
+            const container = document.getElementById('recentUsersList');
+            container.innerHTML = users.map(user => `
+                <div class="recent-user-item">
+                    <img src="${user.avatar || '/images/default-avatar.png'}" alt="${user.name}" class="user-avatar">
+                    <div class="user-info">
+                        <h4>${user.name}</h4>
+                        <p>${user.email}</p>
+                        <span class="user-date">Registrado em: ${new Date(user.createdAt).toLocaleDateString()}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Aprovar novel
+        window.approveNovel = async (novelId) => {
+            try {
+                await adminService.approveNovel(novelId);
+                loadDashboardStats(); // Recarregar dados
+                alert('Novel aprovada com sucesso!');
+            } catch (error) {
+                alert('Erro ao aprovar novel. Por favor, tente novamente.');
+            }
+        };
+
+        // Rejeitar novel
+        window.rejectNovel = async (novelId) => {
+            const reason = prompt('Por favor, insira o motivo da rejeição:');
+            if (reason) {
+                try {
+                    await adminService.rejectNovel(novelId, reason);
+                    loadDashboardStats(); // Recarregar dados
+                    alert('Novel rejeitada com sucesso!');
+                } catch (error) {
+                    alert('Erro ao rejeitar novel. Por favor, tente novamente.');
+                }
+            }
+        };
+
+        // Atualizar estatísticas
+        document.getElementById('refreshStats').addEventListener('click', loadDashboardStats);
+
+        // Carregar dados iniciais
+        loadDashboardStats();
+    </script>
+</body>
+</html> 

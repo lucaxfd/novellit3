@@ -1,0 +1,12 @@
+{
+  "name": "novellit",
+  "version": "1.0.0",
+  "description": "Plataforma digital de leitura",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx http-server -p 3000 --cors"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+} 

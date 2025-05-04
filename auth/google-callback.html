@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login com Google - Novellit</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .callback-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .callback-card {
+            background: var(--card-background);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .callback-card h2 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .callback-card p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--text-secondary);
+            border-top-color: var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 2rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: #EA5455;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="callback-container">
+        <div class="callback-card">
+            <div class="loader"></div>
+            <h2>Processando Login</h2>
+            <p>Por favor, aguarde enquanto processamos seu login com o Google...</p>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { authService } from '../js/api/index.js';
+
+        // Função para obter parâmetros da URL
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                code: params.get('code'),
+                state: params.get('state'),
+                error: params.get('error')
+            };
+        }
+
+        // Função para mostrar erro
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            document.querySelector('.loader').style.display = 'none';
+        }
+
+        // Função principal
+        async function handleCallback() {
+            const { code, state, error } = getUrlParams();
+
+            // Se houver erro no retorno do Google
+            if (error) {
+                showError('Erro ao fazer login com o Google. Por favor, tente novamente.');
+                setTimeout(() => window.location.href = '/login.html', 3000);
+                return;
+            }
+
+            // Se não tiver código ou estado
+            if (!code || !state) {
+                showError('Parâmetros inválidos. Por favor, tente novamente.');
+                setTimeout(() => window.location.href = '/login.html', 3000);
+                return;
+            }
+
+            try {
+                // Processa o callback
+                await authService.handleGoogleCallback(code, state);
+                
+                // Redireciona para a página principal
+                window.location.href = '/dashboard.html';
+            } catch (error) {
+                showError(error.message || 'Erro ao processar login. Por favor, tente novamente.');
+                setTimeout(() => window.location.href = '/login.html', 3000);
+            }
+        }
+
+        // Inicia o processo quando a página carregar
+        handleCallback();
+    </script>
+</body>
+</html> 

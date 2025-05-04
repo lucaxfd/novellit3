@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capítulo - Novellit</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .chapter-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            background-color: #0F0F0F;
+        }
+
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #1A1A1A;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            background-color: #2A2A2A;
+            color: #E0E0E0;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .nav-button:hover {
+            background-color: #A259FF;
+            transform: translateY(-2px);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #2A2A2A;
+            transform: none;
+        }
+
+        .chapter-info {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .novel-title {
+            font-size: 1.2em;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .chapter-title {
+            font-size: 2em;
+            color: #A259FF;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .chapter-content {
+            background-color: #1A1A1A;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .chapter-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #E0E0E0;
+            white-space: pre-wrap;
+        }
+
+        .placeholder-text {
+            background-color: #2A2A2A;
+            height: 20px;
+            border-radius: 4px;
+            margin: 10px 0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .placeholder-paragraph {
+            margin-bottom: 25px;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.6; }
+        }
+
+        .chapter-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #1A1A1A;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .chapter-stats {
+            display: flex;
+            gap: 20px;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comments-section {
+            margin-top: 40px;
+            background-color: #1A1A1A;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #2A2A2A;
+        }
+
+        .comments-title {
+            font-size: 1.5em;
+            color: #A259FF;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .chapter-container {
+                padding: 15px;
+            }
+
+            .chapter-content {
+                padding: 20px;
+            }
+
+            .chapter-navigation {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .nav-button {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .chapter-title {
+                font-size: 1.6em;
+            }
+
+            .chapter-footer {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .chapter-stats {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chapter-container">
+        <nav class="chapter-navigation">
+            <button class="nav-button" disabled>Capítulo Anterior</button>
+            <button class="nav-button">Voltar para Novel</button>
+            <button class="nav-button" disabled>Próximo Capítulo</button>
+        </nav>
+
+        <div class="chapter-info">
+            <div class="novel-title">
+                <div class="placeholder-text" style="width: 40%; margin: 0 auto;"></div>
+            </div>
+            <h1 class="chapter-title">
+                <div class="placeholder-text" style="width: 60%; margin: 0 auto;"></div>
+            </h1>
+        </div>
+
+        <div class="chapter-content">
+            <div class="chapter-text">
+                <!-- Placeholders para o texto do capítulo -->
+                <div class="placeholder-paragraph">
+                    <div class="placeholder-text" style="width: 100%;"></div>
+                    <div class="placeholder-text" style="width: 95%;"></div>
+                    <div class="placeholder-text" style="width: 98%;"></div>
+                    <div class="placeholder-text" style="width: 92%;"></div>
+                </div>
+                <div class="placeholder-paragraph">
+                    <div class="placeholder-text" style="width: 97%;"></div>
+                    <div class="placeholder-text" style="width: 94%;"></div>
+                    <div class="placeholder-text" style="width: 100%;"></div>
+                </div>
+                <div class="placeholder-paragraph">
+                    <div class="placeholder-text" style="width: 96%;"></div>
+                    <div class="placeholder-text" style="width: 93%;"></div>
+                    <div class="placeholder-text" style="width: 99%;"></div>
+                    <div class="placeholder-text" style="width: 91%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chapter-footer">
+            <div class="chapter-stats">
+                <div class="stat-item">
+                    <span>Visualizações:</span>
+                    <span>--</span>
+                </div>
+                <div class="stat-item">
+                    <span>Comentários:</span>
+                    <span>--</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="comments-section">
+            <div class="comments-header">
+                <h2 class="comments-title">Comentários</h2>
+            </div>
+            <div class="placeholder-text" style="width: 100%;"></div>
+            <div class="placeholder-text" style="width: 95%;"></div>
+            <div class="placeholder-text" style="width: 90%;"></div>
+        </div>
+    </div>
+</body>
+</html> 

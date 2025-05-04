@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Novellit</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Novellit</h1>
+            </div>
+            <button class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html" class="active">Novels</a></li>
+                    <li><a href="planos.html">Planos</a></li>
+                    <li><a href="publish.html">Publicar</a></li>
+                    <li><a href="profile.html">Perfil</a></li>
+                    <li><a href="login.html" class="btn-header">Entrar</a></li>
+                    <li><a href="register.html" class="btn-header">Registrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="catalog">
+            <div class="container">
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Buscar por título...">
+                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-box">
+                        <select>
+                            <option value="">Todos os gêneros</option>
+                            <option value="fantasia">Fantasia</option>
+                            <option value="romance">Romance</option>
+                            <option value="acao">Ação</option>
+                            <option value="drama">Drama</option>
+                            <option value="misterio">Mistério</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="novel-grid">
+                    <div class="novel-card">
+                        <img src="https://via.placeholder.com/200x300" alt="Novel Cover">
+                        <h3>Título da Novel</h3>
+                        <p class="author">Autor</p>
+                        <p class="genre">Gênero</p>
+                        <a href="#" class="btn btn-outline" style="width:100%;margin-top:1rem;">Ler</a>
+                    </div>
+                    <div class="novel-card">
+                        <img src="https://via.placeholder.com/200x300" alt="Novel Cover">
+                        <h3>Título da Novel</h3>
+                        <p class="author">Autor</p>
+                        <p class="genre">Gênero</p>
+                        <a href="#" class="btn btn-outline" style="width:100%;margin-top:1rem;">Ler</a>
+                    </div>
+                    <div class="novel-card">
+                        <img src="https://via.placeholder.com/200x300" alt="Novel Cover">
+                        <h3>Título da Novel</h3>
+                        <p class="author">Autor</p>
+                        <p class="genre">Gênero</p>
+                        <a href="#" class="btn btn-outline" style="width:100%;margin-top:1rem;">Ler</a>
+                    </div>
+                    <div class="novel-card">
+                        <img src="https://via.placeholder.com/200x300" alt="Novel Cover">
+                        <h3>Título da Novel</h3>
+                        <p class="author">Autor</p>
+                        <p class="genre">Gênero</p>
+                        <a href="#" class="btn btn-outline" style="width:100%;margin-top:1rem;">Ler</a>
+                    </div>
+                </div>
+
+                <div class="pagination">
+                    <button class="btn btn-outline">Anterior</button>
+                    <span>Página 1 de 5</span>
+                    <button class="btn btn-primary">Próxima</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Novellit. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/menu.js"></script>
+</body>
+</html> 

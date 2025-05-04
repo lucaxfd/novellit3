@@ -1,0 +1,381 @@
+/* Estilos do Painel Administrativo */
+
+.admin-body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+    background: var(--background-color);
+}
+
+/* Sidebar */
+.admin-sidebar {
+    background: var(--card-background);
+    padding: 2rem;
+    border-right: 1px solid rgba(162, 89, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.admin-logo {
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(162, 89, 255, 0.1);
+}
+
+.admin-logo h1 {
+    color: var(--secondary-color);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-logo span {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.admin-menu {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.admin-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.admin-menu li a i {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.admin-menu li a:hover,
+.admin-menu li.active a {
+    background: rgba(162, 89, 255, 0.1);
+}
+
+.admin-menu li a:hover i,
+.admin-menu li.active a i {
+    color: var(--secondary-color);
+}
+
+.admin-user {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(162, 89, 255, 0.1);
+    border-radius: 12px;
+}
+
+.admin-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--card-background);
+}
+
+.admin-user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-user-info strong {
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.admin-user-info span {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+/* Main Content */
+.admin-main {
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.admin-header-title h2 {
+    color: var(--text-color);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-header-title p {
+    color: var(--text-secondary);
+}
+
+.admin-header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Stats Grid */
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.admin-stat-card {
+    background: var(--card-background);
+    border: 1px solid rgba(162, 89, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-icon.users { background: rgba(162, 89, 255, 0.1); color: #A259FF; }
+.stat-icon.novels { background: rgba(82, 182, 154, 0.1); color: #52B69A; }
+.stat-icon.revenue { background: rgba(255, 159, 67, 0.1); color: #FF9F43; }
+.stat-icon.premium { background: rgba(234, 84, 85, 0.1); color: #EA5455; }
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-info h3 {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-info p {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.stat-change {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+.stat-change.positive {
+    background: rgba(82, 182, 154, 0.1);
+    color: #52B69A;
+}
+
+.stat-change.negative {
+    background: rgba(234, 84, 85, 0.1);
+    color: #EA5455;
+}
+
+/* Charts Grid */
+.admin-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.admin-chart-card {
+    background: var(--card-background);
+    border: 1px solid rgba(162, 89, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.admin-chart-card h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.admin-chart-card canvas {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+/* Recent Items Grid */
+.admin-recent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+}
+
+.admin-card {
+    background: var(--card-background);
+    border: 1px solid rgba(162, 89, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.card-header h3 {
+    color: var(--text-color);
+}
+
+.btn-text {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.btn-text:hover {
+    text-decoration: underline;
+}
+
+/* Pending Novels */
+.pending-novel-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: rgba(42, 42, 42, 0.5);
+    margin-bottom: 1rem;
+}
+
+.novel-cover {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.novel-info {
+    flex: 1;
+}
+
+.novel-info h4 {
+    color: var(--text-color);
+    margin-bottom: 0.3rem;
+}
+
+.novel-info p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+}
+
+.novel-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* Recent Users */
+.recent-user-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: rgba(42, 42, 42, 0.5);
+    margin-bottom: 1rem;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-info h4 {
+    color: var(--text-color);
+    margin-bottom: 0.3rem;
+}
+
+.user-info p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.user-date {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+/* Loading State */
+.loading {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .admin-body {
+        grid-template-columns: 240px 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-body {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        bottom: 0;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+
+    .admin-sidebar.active {
+        left: 0;
+    }
+
+    .admin-main {
+        padding: 1rem;
+    }
+
+    .admin-stats-grid,
+    .admin-charts-grid,
+    .admin-recent-grid {
+        grid-template-columns: 1fr;
+    }
+} 
